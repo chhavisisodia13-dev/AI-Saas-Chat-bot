@@ -1,7 +1,7 @@
 const Groq = require("groq-sdk");
 
 const groq = new Groq({
-  apiKey: process.env.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
+  apiKey: GROQ_API_KEY
 });
 
 
