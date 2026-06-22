@@ -20,7 +20,7 @@ require("dotenv").config();
 // GEMINI
 const genAI =
 new GoogleGenerativeAI(
-  process.env.GEMINI_API_KEY
+  process.env.GROQ_API_KEY
 );
 
 const model =

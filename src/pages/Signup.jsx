@@ -13,6 +13,7 @@ function Signup() {
     email: "",
     password: ""
   });
+  
 
   const handleChange = (e) => {
 
@@ -23,28 +24,31 @@ function Signup() {
 
   };
 
-  const handleSubmit = async (e) => {
+ const handleSubmit = async (e) => {
 
-    e.preventDefault();
+  e.preventDefault();
 
-    try {
+  try {
 
-      const res = await axios.post(
-        "http://localhost:5000/api/auth/signup",
-        formData
-      );
+    const res = await axios.post(
 
-      alert(res.data.message);
+      "http://localhost:5000/api/auth/signup",
 
-      navigate("/login");
+      formData
 
-    } catch (error) {
+    );
 
-      alert(error.response.data.message);
+    alert(res.data.message);
 
-    }
+    navigate("/");
 
-  };
+  } catch (error) {
+
+    alert(error.response.data.message);
+
+  }
+
+};
 
   return (
 

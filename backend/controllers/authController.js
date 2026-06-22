@@ -1,41 +1,100 @@
-const Groq = require("groq-sdk");
-
-const groq = new Groq({
-  apiKey: process.env.GROQ_API_KEY,
-});
+const User = require("../models/User");
 
 
-// AI CHAT FUNCTION
-const chatWithAI = async (req, res) => {
+// SIGNUP
+const signup = async (req, res) => {
 
   try {
 
-    const { prompt } = req.body;
+    const { name, email, password } = req.body;
 
-    const completion = await groq.chat.completions.create({
+    const existingUser =
+    await User.findOne({ email });
 
-      messages: [
-        {
-          role: "user",
-          content: prompt
-        }
-      ],
+    if (existingUser) {
 
-      model: "llama3-8b-8192"
+      return res.status(400).json({
+        message: "User already exists"
+      });
+
+    }
+
+    const user = await User.create({
+
+      name,
+      email,
+      password
 
     });
 
-    const reply =
-      completion.choices[0].message.content;
+    res.status(201).json({
 
-    res.status(200).json({
-      reply
+      message: "Signup successful",
+      user
+
     });
 
   } catch (error) {
 
+    console.log(error);
+
     res.status(500).json({
-      message: error.message
+
+      message: "Signup failed"
+
+    });
+
+  }
+
+};
+
+
+// LOGIN
+const login = async (req, res) => {
+
+  try {
+
+    const { email, password } = req.body;
+
+    const user =
+    await User.findOne({ email });
+
+    if (!user) {
+
+      return res.status(400).json({
+
+        message: "User not found"
+
+      });
+
+    }
+
+    if (user.password !== password) {
+
+      return res.status(400).json({
+
+        message: "Invalid password"
+
+      });
+
+    }
+
+    res.status(200).json({
+
+      message: "Login successful",
+      token: "dummy-token",
+      user
+
+    });
+
+  } catch (error) {
+
+    console.log(error);
+
+    res.status(500).json({
+
+      message: "Login failed"
+
     });
 
   }
@@ -43,5 +102,8 @@ const chatWithAI = async (req, res) => {
 };
 
 module.exports = {
-  chatWithAI
+
+  signup,
+  login
+
 };

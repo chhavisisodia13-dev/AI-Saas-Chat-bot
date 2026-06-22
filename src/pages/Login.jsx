@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+
 import "./Auth.css";
 
 function Login() {
@@ -24,28 +25,38 @@ function Login() {
 
   const handleSubmit = async (e) => {
 
-    e.preventDefault();
+  e.preventDefault();
 
-    try {
+  try {
 
-      const res = await axios.post(
-        "http://localhost:5000/api/auth/login",
-        formData
-      );
+    const res = await axios.post(
 
-      localStorage.setItem("token", res.data.token);
+      "http://localhost:5000/api/auth/login",
 
-      alert(res.data.message);
+      formData
 
-      navigate("/dashboard");
+    );
 
-    } catch (error) {
+    localStorage.setItem(
 
-      alert(error.response.data.message);
+      "token",
 
-    }
+      res.data.token
 
-  };
+    );
+
+    alert(res.data.message);
+
+    navigate("/dashboard");
+
+  } catch (error) {
+
+    alert(error.response.data.message);
+
+  }
+
+};
+  
 
   return (
 
@@ -53,7 +64,7 @@ function Login() {
 
       <div className="auth-container">
 
-        <h1>Welcome Back 👋</h1>
+        <h1>Welcome Back </h1>
 
         <p className="auth-subtitle">
           Login to continue chatting with AI

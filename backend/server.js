@@ -7,6 +7,7 @@ const pdfRoutes =
 require("./routes/pdfRoutes");
 const uploadRoutes =
 require("./routes/uploadRoutes");
+const authRoutes = require("./routes/authRoutes");
 
 dotenv.config();
 
@@ -17,7 +18,7 @@ app.use(express.json());
 
 
 // ROUTES
-const authRoutes = require("./routes/authRoutes");
+
 
 app.use("/api/auth", authRoutes);
 app.use("/api/ai", aiRoutes);
